@@ -6,8 +6,15 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		E04B57FE9E122AFA8E596C26 /* Pods_Almacen_IOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50A58A7FCD91E400CB0FB1A1 /* Pods_Almacen_IOS.framework */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
+		1B7B699EF61265F5D32952E3 /* Pods-Almacen_IOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Almacen_IOS.release.xcconfig"; path = "Target Support Files/Pods-Almacen_IOS/Pods-Almacen_IOS.release.xcconfig"; sourceTree = "<group>"; };
+		50A58A7FCD91E400CB0FB1A1 /* Pods_Almacen_IOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Almacen_IOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2BE57202D357C95008AB614 /* Almacen_IOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Almacen_IOS.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		EC68B92E5C892243317EEB9A /* Pods-Almacen_IOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Almacen_IOS.debug.xcconfig"; path = "Target Support Files/Pods-Almacen_IOS/Pods-Almacen_IOS.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -36,17 +43,28 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E04B57FE9E122AFA8E596C26 /* Pods_Almacen_IOS.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3653E0469DBE50059C24E990 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				50A58A7FCD91E400CB0FB1A1 /* Pods_Almacen_IOS.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		B2BE57172D357C95008AB614 = {
 			isa = PBXGroup;
 			children = (
 				B2BE57222D357C95008AB614 /* Almacen_IOS */,
 				B2BE57212D357C95008AB614 /* Products */,
+				FC6DF66DE13547CBAC07C583 /* Pods */,
+				3653E0469DBE50059C24E990 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -58,6 +76,15 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		FC6DF66DE13547CBAC07C583 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				EC68B92E5C892243317EEB9A /* Pods-Almacen_IOS.debug.xcconfig */,
+				1B7B699EF61265F5D32952E3 /* Pods-Almacen_IOS.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -65,6 +92,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = B2BE57332D357C96008AB614 /* Build configuration list for PBXNativeTarget "Almacen_IOS" */;
 			buildPhases = (
+				259507C4005304A1A30FD2A3 /* [CP] Check Pods Manifest.lock */,
 				B2BE571C2D357C95008AB614 /* Sources */,
 				B2BE571D2D357C95008AB614 /* Frameworks */,
 				B2BE571E2D357C95008AB614 /* Resources */,
@@ -77,8 +105,6 @@
 				B2BE57222D357C95008AB614 /* Almacen_IOS */,
 			);
 			name = Almacen_IOS;
-			packageProductDependencies = (
-			);
 			productName = Almacen_IOS;
 			productReference = B2BE57202D357C95008AB614 /* Almacen_IOS.app */;
 			productType = "com.apple.product-type.application";
@@ -127,6 +153,31 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		259507C4005304A1A30FD2A3 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Almacen_IOS-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		B2BE571C2D357C95008AB614 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -140,6 +191,7 @@
 /* Begin XCBuildConfiguration section */
 		B2BE57342D357C96008AB614 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = EC68B92E5C892243317EEB9A /* Pods-Almacen_IOS.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -167,6 +219,7 @@
 		};
 		B2BE57352D357C96008AB614 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 1B7B699EF61265F5D32952E3 /* Pods-Almacen_IOS.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
