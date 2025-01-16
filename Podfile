@@ -6,5 +6,9 @@ target 'Almacen_IOS' do
   use_frameworks!
 
   # Pods for Almacen_IOS
+  pod 'FirebaseAnalytics'
+  pod 'FirebaseAuth'
+  pod 'FirebaseCore'
+  pod 'GoogleSignIn'
 
 end
