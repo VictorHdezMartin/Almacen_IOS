@@ -10,5 +10,6 @@ target 'Almacen_IOS' do
   pod 'FirebaseAuth'
   pod 'FirebaseCore'
   pod 'GoogleSignIn'
+  pod 'FirebaseFirestore'
 
 end

@@ -49,7 +49,7 @@ class LoginViewController: UIViewController, UISearchBarDelegate {
             } else {
                 // Todo correcto
                 
-                self.performSegue(withIdentifier: "goToMain", sender: nil)
+                self.performSegue(withIdentifier: "goToNavigate", sender: nil)
             }
         }
     }
@@ -103,7 +103,7 @@ class LoginViewController: UIViewController, UISearchBarDelegate {
                 }
                        
                 // At this point, our user is signed in
-                self.performSegue(withIdentifier: "goToMain", sender: nil)
+                self.performSegue(withIdentifier: "goToNavigate", sender: nil)
             }
         }
     }

@@ -10,6 +10,7 @@ import UIKit
 class ProductosViewController: UIViewController, UITableViewDataSource, UISearchBarDelegate {
     
     @IBOutlet weak var ProductosTableView: UITableView!
+    @IBOutlet weak var lblProductos: UILabel!
     
     var productoList: [ProductoClass] = []
     var categoria: CategoriaClass!
@@ -24,6 +25,7 @@ class ProductosViewController: UIViewController, UITableViewDataSource, UISearch
         searchController.searchBar.delegate = self
         navigationItem.searchController = searchController
             
+        lblProductos.text = "Categoría [ \(categoria.nCategoria) ]"
         loadAllProductos(categoria: categoria.nCategoria)
     }
     
