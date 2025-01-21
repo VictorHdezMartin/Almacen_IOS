@@ -20,7 +20,7 @@ class ProductosViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
     }
 
-    func render (producto: ProductoClass){
+    func render (producto: ProductosClass){
         lblProducto.text = producto.title
         imgProducto.loadFrom(url: producto.thumbnail)
     }

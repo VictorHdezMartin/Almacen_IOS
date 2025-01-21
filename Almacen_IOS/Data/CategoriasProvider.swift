@@ -8,7 +8,7 @@
 import Foundation
 
 class CategoriasProvider {
-    
+  
     static func findCategoriasBy(name: String) async throws -> [CategoriaClass] {
         let url = URL(string: "https://dummyjson.com/products/categories\(name)")!
         let (data, _) = try await URLSession.shared.data(from: url)
@@ -29,4 +29,13 @@ class CategoriasProvider {
         let result = try JSONDecoder().decode([String].self, from: data)
         return result
     }    
+}
+
+struct CategoriasResponse: Codable {
+    let results: [CategoriaClass]
+}
+
+struct CategoriaClass: Codable {
+    var nCategoria: String               // nombre de la categoria
+    var nImagen: String                  // imagen de la categoria
 }

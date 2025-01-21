@@ -1,47 +1,48 @@
 //
-//  CategoriaClass.swift
+//  ArticuloProvider.swift
 //  Almacen_IOS
 //
-//  Created by Tardes on 16/1/25.
+//  Created by Tardes on 21/1/25.
 //
 
 import Foundation
 
-struct CategoriasResponse: Codable {
-    let results: [CategoriaClass]
+class ArticuloProvider {
+    
+    static func findArticulo(id: Int) async throws -> ArticuloClass {
+        let url = URL(string: "https://dummyjson.com/products/\(id)")!
+        let (data, _) = try await URLSession.shared.data(from: url)
+        let result = try JSONDecoder().decode(ArticuloClass.self, from: data)
+        return result
+    }
 }
 
-struct CategoriaClass: Codable {
-    var nCategoria: String               // nombre de la categoria
-    var nImagen: String                  // imagen de la categoria
+struct ArticuloResponse: Codable {
+    let products: [ArticuloClass]
 }
 
-struct ProductoResponse: Codable {
-    let products: [ProductoClass]
-}
-
-struct ProductoClass: Codable {
+struct ArticuloClass: Codable {
     var id: Int
-    var title: String
-    var description: String
-    var category: String
-    var price: Double
-    var discountPercentage: Double
-    var rating: Double
-    var stock: Int
+    var title: String?
+    var description: String?
+    var category: String?
+    var price: Double?
+    var discountPercentage: Double?
+    var rating: Double?
+    var stock: Int?
     var tags: [String]
-    var brand: String
-    var sku: String
-    var weight: Double
+    var brand: String?
+    var sku: String?
+    var weight: Double?
     var dimensions: Dimensions
-    var warrantyInformation: String
-    var shippingInformation: String
-    var availabilityStatus: String
+    var warrantyInformation: String?
+    var shippingInformation: String?
+    var availabilityStatus: String?
     var reviews: [Review]
-    var returnPolicy: String
-    var minimumOrderQuantity: Int
-    //var meta: [String]
-    var images: [String]
+    var returnPolicy: String?
+    var minimumOrderQuantity: Int?
+  //  var meta: [String]
+    var images: [String]?
     var thumbnail: String
 }
 

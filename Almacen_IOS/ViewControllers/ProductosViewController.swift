@@ -12,7 +12,7 @@ class ProductosViewController: UIViewController, UITableViewDataSource, UISearch
     @IBOutlet weak var ProductosTableView: UITableView!
     @IBOutlet weak var lblProductos: UILabel!
     
-    var productoList: [ProductoClass] = []
+    var productoList: [ProductosClass] = []
     var categoria: CategoriaClass!
     
     override func viewDidLoad() {
@@ -65,6 +65,19 @@ class ProductosViewController: UIViewController, UITableViewDataSource, UISearch
             } catch {
                 print(error)
             }
+        }
+    }
+    
+// movernos a otro ViewController pasando parámetros -----------------------------------------
+            
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if (segue.identifier == "goToArticulo") {
+            let articuloViewController = segue.destination as! ArticuloViewController
+            let indexPath = ProductosTableView.indexPathForSelectedRow!
+            let productoClass = productoList[indexPath.row]
+                
+            articuloViewController.idArticulo = productoClass.id
+            ProductosTableView.deselectRow(at: indexPath, animated: true)
         }
     }
 
