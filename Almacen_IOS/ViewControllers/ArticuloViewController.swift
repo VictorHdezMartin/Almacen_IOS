@@ -47,7 +47,7 @@ class ArticuloViewController: UIViewController, UITableViewDataSource, UISearchB
     var idArticulo: Int!
     var articulo: ArticuloClass!
     
-    var resenasList: [ArticuloClass.reviews] = []
+    var resenasList: [Review] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -124,6 +124,7 @@ class ArticuloViewController: UIViewController, UITableViewDataSource, UISearchB
         
      // Reseñas  --------
         
+        resenasList = articulo.reviews
         
         
         
