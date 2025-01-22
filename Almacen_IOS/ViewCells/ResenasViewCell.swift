@@ -10,7 +10,6 @@ import UIKit
 class ResenasViewCell: UITableViewCell {
     
     @IBOutlet weak var lbl_Comentario: UITextView!
-    @IBOutlet weak var txt_Email: UITextView!
     @IBOutlet weak var lbl_Fecha: UILabel!
     @IBOutlet weak var lbl_Valoracion: UILabel!
     @IBOutlet weak var lbl_Nombre: UILabel!
@@ -25,29 +24,13 @@ class ResenasViewCell: UITableViewCell {
 
     }
     
-    func render (reviews: ArticuloClass.reviews){
-        lbl_Comentario.text = 
-        
-        
-        
-       
+    func render (review: Review){
+        lbl_Comentario.text = review.comment
+        lbl_Email.text = review.reviewerEmail
+        lbl_Fecha.text = review.date
+        lbl_Valoracion.text = String(format: "%.1f", review.rating)
+        lbl_Nombre.text = review.reviewerName
     }
 
 }
 
-
-/*
- 
- 
- override func setSelected(_ selected: Bool, animated: Bool) {
-     super.setSelected(selected, animated: animated)
- }
- 
- func render (categoria: CategoriaClass){
-     lblCategoria.text = categoria.nCategoria
-     imgCategoria.loadFrom(url: categoria.nImagen)
- }
- 
- 
- 
- */

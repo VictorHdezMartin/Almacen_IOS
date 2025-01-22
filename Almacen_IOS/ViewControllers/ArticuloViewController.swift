@@ -7,8 +7,15 @@
 
 import UIKit
 
-class ArticuloViewController: UIViewController, UITableViewDataSource, UISearchBarDelegate {
-
+class ArticuloViewController: UIViewController, UITableViewDataSource, UISearchBarDelegate, UICollectionViewDataSource {
+    
+    @IBOutlet weak var ResenasTableView: UITableView!
+    @IBOutlet weak var ImgCollectionView: UICollectionView!
+    @IBOutlet weak var GaleriaTableView: UITableView!
+    
+    @IBOutlet weak var lbl_Articulo: UILabel!
+    @IBOutlet weak var lbl_NombreArticulo: UILabel!
+    
     @IBOutlet weak var SegmenControl: UISegmentedControl!
     @IBOutlet weak var CaracteristicasView: UIView!
     @IBOutlet weak var ResenasView: UIView!
@@ -34,57 +41,89 @@ class ArticuloViewController: UIViewController, UITableViewDataSource, UISearchB
     
 // Reseñas
     
-    
-    
 // Galería
     
-    
-    
-    
- 
 //  -----------------------------------------------------
     
     var idArticulo: Int!
     var articulo: ArticuloClass!
     
-    var resenasList: [Review] = []
+    var resenasList: [Review] = []      // reseñas en modo vertical
+    var galeriaList: [String] = []      // galeria imagenes en modo vertical
+    var galeriaHList: [String] = []     // galeria imagenes en modo horizontal
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        ResenasTableView.dataSource = self
+        GaleriaTableView.dataSource = self
+        ImgCollectionView.dataSource = self
+     
         SegmenControl.selectedSegmentIndex = 0
         TabBarSelect(SegmenControl.selectedSegmentIndex)
         
         LoadArticulo(id: idArticulo)
     }
     
-// Selección del TabBar --------------------------------
+// Selección del TabBar  -----------------------------------------------------------
         
     func TabBarSelect(_ index: Int) {
+        
         CaracteristicasView.isHidden = true
         ResenasView.isHidden = true
         GaleriaView.isHidden = true
+        ImgCollectionView.isHidden = true
             
         switch index {
             case 0: CaracteristicasView.isHidden = false
             case 1: ResenasView.isHidden = false
-            default: GaleriaView.isHidden = false
+            case 2: GaleriaView.isHidden = false
+            default: ImgCollectionView.isHidden = false
         }
     }
 
 // funciones del TableView  --------------------------------------------------------
                 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return resenasList.count
+        
+        switch tableView.tag{
+            case 0: return resenasList.count
+            default: return galeriaList.count
+        }
     }
                     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! ResenasViewCell
-        let resena = resenasList[indexPath.item]
-        cell.render(resena: resena)
+        switch tableView.tag {
+        case 0: let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! ResenasViewCell
+                let resena = resenasList[indexPath.item]
+                cell.render(review: resena)
+                return cell
+            
+        default: let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! GaleriaViewCell
+                 let galeria = galeriaList[indexPath.item]
+                 cell.render(imagen: galeria)
+                 return cell
+        }
+    }
+    
+// funciones del CollectionView  ------------------------------------------------------
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return galeriaHList.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "Cell", for: indexPath) as! GaleriaHViewCell
+        let galeriaH = galeriaList[indexPath.item]
+        cell.render(imagen: galeriaH)
         return cell
     }
     
+// SegmenControl cambio de selcción ---------------------------------------------
+    
+    @IBAction func CambioSeleccion(_ sender: Any) {
+        TabBarSelect(SegmenControl.selectedSegmentIndex)
+    }
     
 // Load Articulo  ----------------------------------------------------------------
         
@@ -108,6 +147,9 @@ class ArticuloViewController: UIViewController, UITableViewDataSource, UISearchB
         imgArticulo.loadFrom(url: articulo.thumbnail)
         
      // Características ------
+        lbl_Articulo.text = "Categoría [ \(articulo.category ?? "") ] "
+        lbl_NombreArticulo.text = articulo.title ?? ""
+        
         lbl_Categoria.text = "  \(articulo.category ?? "")"
         lbl_Marca.text = "  \(articulo.brand ?? "")"
         lbl_Descripcion.text = "  \(articulo.description ?? "")"
@@ -125,11 +167,17 @@ class ArticuloViewController: UIViewController, UITableViewDataSource, UISearchB
      // Reseñas  --------
         
         resenasList = articulo.reviews
-        
-        
+        ResenasTableView.reloadData()
         
      // Galería ---------
         
+        galeriaList = articulo.images!
+        GaleriaTableView.reloadData()
+        
+    // Galeria Horizontal  -----------
+        
+        galeriaHList = articulo.images!
+        ImgCollectionView.reloadData()
         
     }
     
