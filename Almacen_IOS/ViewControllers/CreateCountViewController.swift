@@ -27,6 +27,8 @@ class CreateCountViewController: UIViewController, PHPickerViewControllerDelegat
     @IBOutlet weak var telefono: UITextField!
     @IBOutlet weak var imagenPerfil: UIImageView!
     
+    var user: User?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -71,7 +73,10 @@ class CreateCountViewController: UIViewController, PHPickerViewControllerDelegat
                         default: Gender.other
                      }
         
-        let user = User(id: userID, username: username, firstName: firstName, lastName: lastName, gender: gender, birthday: birthday, provider: .basic, profileImageUrl: nil)
+        let phone = telefono.text!
+        let perfilImagen = "https://cdn.dummyjson.com/products/images/mens-watches/Brown%20Leather%20Belt%20Watch/thumbnail.png"
+        
+        let user = User(id: userID, username: username, firstName: firstName, lastName: lastName, gender: gender, birthday: birthday, provider: .basic, profileImageUrl: perfilImagen, phone: phone)
         
         let db = Firestore.firestore()
         do {
@@ -103,10 +108,7 @@ class CreateCountViewController: UIViewController, PHPickerViewControllerDelegat
         userPassword.isSecureTextEntry = !userPassword.isSecureTextEntry
     }
     
-    
-
-    
-    
+// // Acciones sobre repetir contraseña
     
     
 // validar datos introducidos -------------------------------------------------------------------------

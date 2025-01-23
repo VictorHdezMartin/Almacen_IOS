@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import FirebaseAuth
 
 class ProductosViewController: UIViewController, UITableViewDataSource, UISearchBarDelegate {
     
@@ -79,6 +80,18 @@ class ProductosViewController: UIViewController, UITableViewDataSource, UISearch
             articuloViewController.idArticulo = productoClass.id
             ProductosTableView.deselectRow(at: indexPath, animated: true)
         }
+    }
+    
+// Salir de la aplicacion (Log out)  ---------------------------------------
+      
+    @IBAction func LogOut(_ sender: Any) {
+        do {
+            try Auth.auth().signOut()
+        } catch let signOutError as NSError {
+            print("Error signing out: %@", signOutError)
+        }
+                      
+        self.navigationController?.navigationController?.popToRootViewController(animated: true)
     }
 
 }

@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import FirebaseAuth
 
 class ArticuloViewController: UIViewController, UITableViewDataSource, UISearchBarDelegate, UICollectionViewDataSource {
     
@@ -178,6 +179,17 @@ class ArticuloViewController: UIViewController, UITableViewDataSource, UISearchB
         
         ImgCollectionView.reloadData()
         
+    }
+    
+// Salir de la aplicacion (Log out)  ---------------------------------------
+    @IBAction func LogOut(_ sender: Any) {
+        do {
+            try Auth.auth().signOut()
+        } catch let signOutError as NSError {
+            print("Error signing out: %@", signOutError)
+        }
+                  
+        self.navigationController?.navigationController?.popToRootViewController(animated: true)
     }
     
 }
