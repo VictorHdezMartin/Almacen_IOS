@@ -27,7 +27,7 @@ class ArticuloViewController: UIViewController, UITableViewDataSource, UISearchB
  // Características
     @IBOutlet weak var lbl_Categoria: UILabel!
     @IBOutlet weak var lbl_Marca: UILabel!
-    @IBOutlet weak var lbl_Descripcion: UILabel!
+    @IBOutlet weak var lbl_Description: UITextView!
     @IBOutlet weak var lbl_Nombre: UILabel!
     @IBOutlet weak var lbl_Precio: UILabel!
     @IBOutlet weak var lbl_Devoluciones: UILabel!
@@ -50,7 +50,7 @@ class ArticuloViewController: UIViewController, UITableViewDataSource, UISearchB
     
     var resenasList: [Review] = []      // reseñas en modo vertical
     var galeriaList: [String] = []      // galeria imagenes en modo vertical
-    var galeriaHList: [String] = []     // galeria imagenes en modo horizontal
+    //var galeriaHList: [String] = []     // galeria imagenes en modo horizontal
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -109,7 +109,7 @@ class ArticuloViewController: UIViewController, UITableViewDataSource, UISearchB
 // funciones del CollectionView  ------------------------------------------------------
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return galeriaHList.count
+        return galeriaList.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -152,7 +152,7 @@ class ArticuloViewController: UIViewController, UITableViewDataSource, UISearchB
         
         lbl_Categoria.text = "  \(articulo.category ?? "")"
         lbl_Marca.text = "  \(articulo.brand ?? "")"
-        lbl_Descripcion.text = "  \(articulo.description ?? "")"
+        lbl_Description.text = "  \(articulo.description ?? "")"
         lbl_Nombre.text = "  \(articulo.title ?? "")"
         lbl_Precio.text = "  \(String(format: "%.2f", articulo.price ?? 0.00))"
         lbl_Devoluciones.text = "  \(articulo.returnPolicy ?? "")"
@@ -176,7 +176,6 @@ class ArticuloViewController: UIViewController, UITableViewDataSource, UISearchB
         
     // Galeria Horizontal  -----------
         
-        galeriaHList = articulo.images!
         ImgCollectionView.reloadData()
         
     }

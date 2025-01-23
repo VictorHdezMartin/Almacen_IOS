@@ -7,14 +7,16 @@
 
 import UIKit
 import FirebaseAuth
+import FirebaseFirestore
+import PhotosUI
 
-class CreateCountViewController: UIViewController {
+class CreateCountViewController: UIViewController, PHPickerViewControllerDelegate {
     
     @IBOutlet weak var userEmail: UITextField!
     @IBOutlet weak var userPassword: UITextField!
     @IBOutlet weak var nClaveUsuario: UILabel!
     
- // datos personales
+    // datos personales
    
     @IBOutlet weak var userPasswordRepetir: UITextField!
     @IBOutlet weak var nClaveUsuarioRepetir: UILabel!
@@ -32,41 +34,62 @@ class CreateCountViewController: UIViewController {
         fechaNacimiento.maximumDate = mayorEdad
     }
     
+// Crear usuario  --------------------------------------------------------------------------
+    
     @IBAction func CreateAccount(_ sender: Any) {
+        
+        let username = userEmail.text!
+        let password = userPassword.text!
+        
         if (ValidarDatos()) {
             Auth.auth().createUser(withEmail: userEmail.text!, password: userPassword.text!) { authResult, error in
                 if let error = error {
                     // Hubo un error
-                    
                     let alertController = UIAlertController(title: "Crear usuario", message: error.localizedDescription, preferredStyle: .alert)
                     
                     alertController.addAction(UIAlertAction(title: "OK", style: .default))
                     
                     self.present(alertController, animated: true, completion: nil)
                 } else {
-                    // Todo correcto
-                    
-                    self.CrearCuenta()
-                    
-                    let alertController = UIAlertController(title: "Crear usuario", message: "Usuario creado correctamente", preferredStyle: .alert)
-                    
-                    alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in
-                
-                     // volver al primer controlador de vista en la pila de navegación (la raíz)
-                        self.navigationController?.popToRootViewController(animated: true)
-                        
-                    //  ir al controlador de vista actual está dentro de un UINavigationController
-                    //  self.navigationController?.popViewController(animated: true)
-                    }))
-                    
-                    
-            
-                    self.present(alertController, animated: true, completion: nil)
-                
+                 // Todo correcto
+                    self.crearCuenta()
                 }
             }
         }
     }
+    
+    func crearCuenta() {
+        let userID = Auth.auth().currentUser!.uid
+        let username = userEmail.text!
+        //let password = userPassword.text!
+        let firstName = soloNombre.text!
+        let lastName = soloApellidos.text!
+        let birthday = fechaNacimiento.date
+        let gender = switch userTrato.selectedSegmentIndex {
+                        case 0: Gender.male
+                        case 1: Gender.female
+                        default: Gender.other
+                     }
+        
+        let user = User(id: userID, username: username, firstName: firstName, lastName: lastName, gender: gender, birthday: birthday, provider: .basic, profileImageUrl: nil)
+        
+        let db = Firestore.firestore()
+        do {
+            try db.collection("Usuarios").document(userID).setData(from: user)
+            
+            let alertController = UIAlertController(title: "Crear cuenta", message: "Cuenta creada correctamente.", preferredStyle: .alert)
+            
+            alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: { _ in
+                self.performSegue(withIdentifier: "goToVerificarCuenta", sender: self)
+            }))
+            
+            self.present(alertController, animated: true, completion: nil)
+        } catch let error {
+            print("Error escribiendo en FireStore: \(error)")
+        }
+    }
+    
+// Acciones sobre la contraseña
     
     @IBAction func nClaveUsuario(_ sender: Any) {
         if (userPassword.text!.count) <= 6 {
@@ -80,47 +103,58 @@ class CreateCountViewController: UIViewController {
         userPassword.isSecureTextEntry = !userPassword.isSecureTextEntry
     }
     
+    
+
+    
+    
+    
+    
 // validar datos introducidos -------------------------------------------------------------------------
     
     func ValidarDatos() -> Bool {
         
+        if soloNombre.text!.isEmpty { return false }
+        if soloApellidos.text!.isEmpty { return false }
         if userEmail.text!.isEmpty { return false }
-        if userPassword.text!.isEmpty { return false }
         if userPasswordRepetir.text!.isEmpty { return false }
-        if userPassword != userPasswordRepetir { return false }
-        if soloNombre.text!.isEmpty { return false}
+        if userPassword.text != userPasswordRepetir.text { return false }
         if telefono.text!.isEmpty { return false }
-        
-            
-    
-        
-        
-        
-        
-        
+
         return true
     }
+
+// cargar imagen de perfil  -----------------------------------------------------------
     
- // Crear cuenta  -------------------------------------------------------------------------------------
-    
-    func CrearCuenta () {
+    @IBAction func LoadImagenPerfil(_ sender: Any) {
         
+        var config = PHPickerConfiguration()
+        config.selectionLimit = 1
+        config.filter = .images
         
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
+        let picker = PHPickerViewController(configuration: config)
+        picker.delegate = self
+        present(picker, animated: true, completion: nil)
     }
     
-    
-    
-    
+    func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
+        picker.dismiss(animated: true, completion: nil)
+        
+        guard let selectedItem = results.first else { return }
+        
+     // Obtener el asset de la imagen seleccionada
+        selectedItem.itemProvider.loadObject(ofClass: UIImage.self) { (object, error) in
+            if let image = object as? UIImage {
+             // Aquí tienes la imagen cargada
+                DispatchQueue.main.async {
+                 // Usar la imagen en el UIImageView o hacer lo que necesites
+                    self.imagenPerfil.image = image
+                }
+            } else {
+                print("Error: No se puede obtener ni cargar la imagen")
+            }
+        }
+    }
 }
+
+    
+

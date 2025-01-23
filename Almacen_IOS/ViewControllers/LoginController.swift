@@ -9,6 +9,7 @@ import UIKit
 import FirebaseAuth
 import FirebaseCore
 import GoogleSignIn
+import FirebaseFirestore
 
 class LoginViewController: UIViewController, UISearchBarDelegate {
     
@@ -33,23 +34,39 @@ class LoginViewController: UIViewController, UISearchBarDelegate {
         self.performSegue(withIdentifier: "goToCrearCuenta", sender: nil)
     }
     
+// He olvidado la contraseña -----------------------------------------------------------------------
+    
+    @IBAction func RecuperarPassword(_ sender: Any) {
+        let username = correoUsuario.text!
+           Auth.auth().sendPasswordReset(withEmail: username) { error in
+               if (error != nil) {
+                   print(error!.localizedDescription)
+               }
+           }
+           let alert = UIAlertController(title: "Recuperar contraseña", message: "Te hemos enviado un correo a \(username) para recuperar tu contraseña.", preferredStyle: .alert)
+           alert.addAction(UIAlertAction(title: "Ok", style: .default))
+           self.present(alert, animated: true)
+    }
+    
 // Iniciar sesión [On_TouchUpInside ]
     
     @IBAction func usuario_login(_ sender: Any) {
         Auth.auth().signIn(withEmail: correoUsuario.text!, password: claveUsuario.text!) { [unowned self] authResult, error in
             //guard let strongSelf = self else { return }
             if let error = error {
-                // Hubo un error
-                
+             // Hubo un error
                 let alertController = UIAlertController(title: "Iniciar sesión", message: error.localizedDescription, preferredStyle: .alert)
                 
                 alertController.addAction(UIAlertAction(title: "OK", style: .default))
                 
                 self.present(alertController, animated: true, completion: nil)
             } else {
-                // Todo correcto
-                
-                self.performSegue(withIdentifier: "goToNavigate", sender: nil)
+             // Todo correcto
+                if authResult!.user.isEmailVerified {
+                    self.performSegue(withIdentifier: "goToNavigate", sender: nil)
+                } else {
+                    self.performSegue(withIdentifier: "goToVerificarCuenta", sender: self)
+                }
             }
         }
     }
@@ -80,33 +97,71 @@ class LoginViewController: UIViewController, UISearchBarDelegate {
         
     func GoogleSignIn() {
     
-     // Configure Google SignIn with Firebase
-        guard let clientID = FirebaseApp.app()?.options.clientID else { return }
-        let config = GIDConfiguration(clientID: clientID)
-        GIDSignIn.sharedInstance.configuration = config
-               
-     // Start the sign in flow!
-        GIDSignIn.sharedInstance.signIn(withPresenting: self) { [unowned self] result, error in
-            guard error == nil else {
-                return
-            }
+        // Configure Google SignIn with Firebase
+           guard let clientID = FirebaseApp.app()?.options.clientID else { return }
+           let config = GIDConfiguration(clientID: clientID)
+           GIDSignIn.sharedInstance.configuration = config
+                  
+        // Start the sign in flow!
+           GIDSignIn.sharedInstance.signIn(withPresenting: self) { [unowned self] result, error in
+               guard error == nil else {
+                   return
+               }
 
-            guard let user = result?.user, let idToken = user.idToken?.tokenString else {
-                return
-            }
+               guard let user = result?.user, let idToken = user.idToken?.tokenString else {
+                   return
+               }
 
-            let credential = GoogleAuthProvider.credential(withIDToken: idToken, accessToken: user.accessToken.tokenString)
+               let credential = GoogleAuthProvider.credential(withIDToken: idToken, accessToken: user.accessToken.tokenString)
 
-            Auth.auth().signIn(with: credential) { result, error in
-                guard error == nil else {
-                    return
+               Auth.auth().signIn(with: credential) { result, error in
+                   guard error == nil else {
+                       return
+                   }
+
+                   Task {
+                       await self.createUser(googleUser: user)
+                                       
+                       DispatchQueue.main.async {
+                   // SessionManager.setSession(forUser: user.profile!.email, andPassword: "", withProvider: LoginProvider.google)
+                                           
+                           self.performSegue(withIdentifier: "goToNavigate", sender: nil)
+                       }
+                   }
+               }
+           }
+    }
+    
+    func createUser(googleUser: GIDGoogleUser) async {
+        
+            let userID = Auth.auth().currentUser!.uid
+            let db = Firestore.firestore()
+            let docRef = db.collection("Usuarios").document(userID)
+            
+            do {
+                let document = try await docRef.getDocument()
+                if !document.exists {
+                    let username = googleUser.profile!.email
+                    let firstName = googleUser.profile!.givenName ?? googleUser.profile!.name
+                    let lastName = googleUser.profile!.familyName ?? ""
+                    //let birthday = nil
+                    let gender = Gender.unspecified
+                    let profileImageUrl = googleUser.profile!.hasImage ? googleUser.profile!.imageURL(withDimension: 200) : nil
+                    
+                    let user = User(id: userID, username: username, firstName: firstName, lastName: lastName, gender: gender, birthday: nil, provider: .google, profileImageUrl: profileImageUrl?.absoluteString)
+                    
+                    do {
+                        try db.collection("Usuarios").document(userID).setData(from: user)
+                    } catch let error {
+                        print("Error escribiendo en FireStore: \(error)")
+                    }
                 }
-                       
-                // At this point, our user is signed in
-                self.performSegue(withIdentifier: "goToNavigate", sender: nil)
+            } catch {
+                print("Error: No se puede recuperar perfil del usuario\(error)")
             }
         }
-    }
+    
+    
     
 // Login: HOTMAIL  ----------------------------------------------------------------------------
     

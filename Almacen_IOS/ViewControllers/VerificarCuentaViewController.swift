@@ -6,13 +6,15 @@
 //
 
 import UIKit
+import FirebaseAuth
 
 class VerificarCuentaViewController: UIViewController {
-    
     
     @IBOutlet weak var msgVerificarCuenta: UITextView!
     
     var usuario_login: String = "Víctor Manuel"
+    var timer: Timer? = nil
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,11 +31,45 @@ class VerificarCuentaViewController: UIViewController {
         msgVerificarCuenta.text = mensaje
     }
     
-
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        sendEmailButton(nil)
+    }
     
-    @IBAction func btnVerificarCuenta(_ sender: Any) {
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        if timer != nil {
+            timer?.invalidate()
+        }
+    }
+    
+    func emailVerified () {
+        let alert = UIAlertController(title: "Verificar cuenta", message: "Cuenta verificada correctamente", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Volver al Login", style: .default, handler: { action in
+            self.navigationController?.popToRootViewController(animated: true)
+        }))
+        self.present(alert, animated: true)
+    }
+    
+    
+// botón de renviar email  ---------------------------------------------------------
+    
+    @IBAction func sendEmailButton(_ sender: Any?) {
+        guard let user = Auth.auth().currentUser else {
+            return
+        }
+        user.sendEmailVerification()
         
-        
+        if timer != nil {
+            timer?.invalidate()
+        }
+        timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { timer in
+            user.reload()
+            if (user.isEmailVerified) {
+                timer.invalidate()
+                self.emailVerified()
+            }
+        }
     }
     
 }
