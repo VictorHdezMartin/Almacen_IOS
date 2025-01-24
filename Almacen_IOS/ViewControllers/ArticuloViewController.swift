@@ -65,10 +65,6 @@ class ArticuloViewController: UIViewController, UITableViewDataSource, UISearchB
      // Configurar el CollectionView
         ImgCollectionView.delegate = self
         ImgCollectionView.dataSource = self
-        
-     // Configurar los botones
-        //btn_Siguiente.addTarget(self, action: #selector(ImagenAnterior), for: .touchUpInside)
-        //btn_Anterior.addTarget(self, action: #selector(ImagenSiguiente), for: .touchUpInside)
      
         SegmenControl.selectedSegmentIndex = 0
         TabBarSelect(SegmenControl.selectedSegmentIndex)
@@ -83,15 +79,13 @@ class ArticuloViewController: UIViewController, UITableViewDataSource, UISearchB
         CaracteristicasView.isHidden = true
         ResenasView.isHidden = true
         GaleriaView.isHidden = true
-        ImgCollectionView.isHidden = true
         NavigacionView.isHidden = true
             
         switch index {
             case 0: CaracteristicasView.isHidden = false
             case 1: ResenasView.isHidden = false
             case 2: GaleriaView.isHidden = false
-            default: ImgCollectionView.isHidden = false
-            NavigacionView.isHidden = false
+            default: NavigacionView.isHidden = false
         }
     }
 
