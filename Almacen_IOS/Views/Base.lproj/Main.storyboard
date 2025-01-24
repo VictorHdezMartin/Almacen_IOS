@@ -648,8 +648,8 @@
                                 <segments>
                                     <segment title="Características"/>
                                     <segment title="Reseñas"/>
-                                    <segment title="Galería [ V ]"/>
-                                    <segment title="Galería [ H ]"/>
+                                    <segment title="Galería -"/>
+                                    <segment title="Galería I"/>
                                 </segments>
                                 <connections>
                                     <action selector="CambioSeleccion:" destination="DOU-fW-CnV" eventType="valueChanged" id="bkq-iv-m9d"/>
@@ -667,6 +667,73 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <view contentMode="scaleToFill" id="af5-hM-KAj">
+                                <rect key="frame" x="17" y="396" width="358" height="394"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <subviews>
+                                    <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" tag="2" contentMode="scaleToFill" fixedFrame="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="djL-22-izf">
+                                        <rect key="frame" x="-4" y="-7" width="368" height="414"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="gel-jU-5Eg">
+                                            <size key="itemSize" width="358" height="396"/>
+                                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                        </collectionViewFlowLayout>
+                                        <cells>
+                                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="Cell" id="NVJ-xc-clL" customClass="GaleriaHViewCell" customModule="Almacen_IOS" customModuleProvider="target">
+                                                <rect key="frame" x="0.0" y="9" width="358" height="396"/>
+                                                <autoresizingMask key="autoresizingMask"/>
+                                                <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="5DE-cA-YeJ">
+                                                    <rect key="frame" x="0.0" y="0.0" width="358" height="396"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <subviews>
+                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JdV-zv-WZR">
+                                                            <rect key="frame" x="0.0" y="0.0" width="358" height="396"/>
+                                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                        </imageView>
+                                                    </subviews>
+                                                </collectionViewCellContentView>
+                                                <size key="customSize" width="358" height="396"/>
+                                                <connections>
+                                                    <outlet property="imagen" destination="JdV-zv-WZR" id="xVH-Af-BSd"/>
+                                                </connections>
+                                            </collectionViewCell>
+                                        </cells>
+                                    </collectionView>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wkz-8L-exE">
+                                        <rect key="frame" x="0.0" y="0.0" width="71" height="394"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain" image="icono_anterior (50x50)"/>
+                                        <connections>
+                                            <action selector="ImagenAnterior" destination="DOU-fW-CnV" eventType="touchUpInside" id="QYK-Bd-3RM"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hG5-lA-yZt">
+                                        <rect key="frame" x="295" y="0.0" width="63" height="394"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMinX="YES"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain" image="icono_siguiente (50x50)"/>
+                                        <connections>
+                                            <action selector="ImagenSiguiente" destination="DOU-fW-CnV" eventType="touchUpInside" id="Blt-JL-G8s"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GWa-tY-pVF" userLabel="LogOut">
+                                <rect key="frame" x="339" y="103" width="54" height="42"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" systemColor="systemIndigoColor"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="filled" image="log-out (30x30)">
+                                    <color key="baseBackgroundColor" systemColor="systemIndigoColor"/>
+                                </buttonConfiguration>
+                                <connections>
+                                    <action selector="LogOut:" destination="DOU-fW-CnV" eventType="touchUpInside" id="aiA-zh-cQy"/>
+                                </connections>
+                            </button>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nkQ-Ez-HEq">
                                 <rect key="frame" x="16" y="386" width="361" height="400"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1014,49 +1081,6 @@
                                     </tableView>
                                 </subviews>
                             </view>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" tag="2" contentMode="scaleToFill" fixedFrame="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="djL-22-izf">
-                                <rect key="frame" x="16" y="386" width="368" height="414"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="gel-jU-5Eg">
-                                    <size key="itemSize" width="358" height="396"/>
-                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                </collectionViewFlowLayout>
-                                <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="Cell" id="NVJ-xc-clL" customClass="GaleriaHViewCell" customModule="Almacen_IOS" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="9" width="358" height="396"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="5DE-cA-YeJ">
-                                            <rect key="frame" x="0.0" y="0.0" width="358" height="396"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JdV-zv-WZR">
-                                                    <rect key="frame" x="0.0" y="0.0" width="358" height="396"/>
-                                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                                </imageView>
-                                            </subviews>
-                                        </collectionViewCellContentView>
-                                        <size key="customSize" width="358" height="396"/>
-                                        <connections>
-                                            <outlet property="imagen" destination="JdV-zv-WZR" id="xVH-Af-BSd"/>
-                                        </connections>
-                                    </collectionViewCell>
-                                </cells>
-                            </collectionView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GWa-tY-pVF" userLabel="LogOut">
-                                <rect key="frame" x="339" y="103" width="54" height="42"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" systemColor="systemIndigoColor"/>
-                                <state key="normal" title="Button"/>
-                                <buttonConfiguration key="configuration" style="filled" image="log-out (30x30)">
-                                    <color key="baseBackgroundColor" systemColor="systemIndigoColor"/>
-                                </buttonConfiguration>
-                                <connections>
-                                    <action selector="LogOut:" destination="DOU-fW-CnV" eventType="touchUpInside" id="aiA-zh-cQy"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="yYW-sO-O1F"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -1067,9 +1091,12 @@
                         <outlet property="GaleriaTableView" destination="XjL-L0-fke" id="7tO-kv-RPO"/>
                         <outlet property="GaleriaView" destination="PpO-ji-PvZ" id="d0Z-pF-Utc"/>
                         <outlet property="ImgCollectionView" destination="djL-22-izf" id="QIN-EK-ToI"/>
+                        <outlet property="NavigacionView" destination="af5-hM-KAj" id="9K3-Dh-PDN"/>
                         <outlet property="ResenasTableView" destination="KWI-5f-wbR" id="7Gu-TJ-Byz"/>
                         <outlet property="ResenasView" destination="opT-zU-0SR" id="n6H-ko-WJl"/>
                         <outlet property="SegmenControl" destination="jeG-BI-Qdj" id="QCK-pV-Al6"/>
+                        <outlet property="btn_Anterior" destination="wkz-8L-exE" id="7de-S0-VUc"/>
+                        <outlet property="btn_Siguiente" destination="hG5-lA-yZt" id="lXr-pb-MFF"/>
                         <outlet property="imgArticulo" destination="tD1-cd-kcQ" id="hHn-b1-JoJ"/>
                         <outlet property="lbl_Articulo" destination="7Rq-tz-qYg" id="gh0-GO-KnD"/>
                         <outlet property="lbl_Categoria" destination="h77-JG-FXO" id="mZ7-qq-gej"/>
@@ -1509,8 +1536,10 @@ El equipo de Gestión de almacén
         <image name="google (48x48)" width="48" height="48"/>
         <image name="house" catalog="system" width="128" height="104"/>
         <image name="house.fill" catalog="system" width="128" height="104"/>
+        <image name="icono_anterior (50x50)" width="50" height="50"/>
         <image name="icono_hombre" width="512" height="512"/>
         <image name="icono_mujer" width="512" height="512"/>
+        <image name="icono_siguiente (50x50)" width="50" height="50"/>
         <image name="icono_validarUsuario" width="48" height="48"/>
         <image name="iniciar-sesion (48x48)" width="48" height="48"/>
         <image name="log-out (30x30)" width="30" height="30"/>
@@ -1524,37 +1553,37 @@ El equipo de Gestión de almacén
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="linkColor">
-            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemBlueColor">
-            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemGray6Color">
-            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.94901960780000005" green="0.94901960780000005" blue="0.96862745100000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemGreenColor">
-            <color red="0.20392156862745098" green="0.7803921568627451" blue="0.34901960784313724" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemIndigoColor">
-            <color red="0.34509803921568627" green="0.33725490196078434" blue="0.83921568627450982" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.34509803919999998" green="0.33725490200000002" blue="0.83921568629999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemPinkColor">
-            <color red="1" green="0.17647058823529413" blue="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="1" green="0.1764705882" blue="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemPurpleColor">
-            <color red="0.68627450980392157" green="0.32156862745098042" blue="0.87058823529411766" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.68627450980000004" green="0.32156862749999998" blue="0.87058823529999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemRedColor">
-            <color red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="systemYellowColor">
             <color red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
         <systemColor name="tintColor">
-            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

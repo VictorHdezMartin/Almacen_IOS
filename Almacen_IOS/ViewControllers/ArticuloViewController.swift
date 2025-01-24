@@ -8,7 +8,7 @@
 import UIKit
 import FirebaseAuth
 
-class ArticuloViewController: UIViewController, UITableViewDataSource, UISearchBarDelegate, UICollectionViewDataSource {
+class ArticuloViewController: UIViewController, UITableViewDataSource, UISearchBarDelegate, UICollectionViewDataSource, UICollectionViewDelegate {
     
     @IBOutlet weak var ResenasTableView: UITableView!
     @IBOutlet weak var ImgCollectionView: UICollectionView!
@@ -43,6 +43,9 @@ class ArticuloViewController: UIViewController, UITableViewDataSource, UISearchB
 // Reseñas
     
 // Galería
+    @IBOutlet weak var NavigacionView: UIView!
+    @IBOutlet weak var btn_Anterior: UIButton!
+    @IBOutlet weak var btn_Siguiente: UIButton!
     
 //  -----------------------------------------------------
     
@@ -58,7 +61,14 @@ class ArticuloViewController: UIViewController, UITableViewDataSource, UISearchB
         
         ResenasTableView.dataSource = self
         GaleriaTableView.dataSource = self
+        
+     // Configurar el CollectionView
+        ImgCollectionView.delegate = self
         ImgCollectionView.dataSource = self
+        
+     // Configurar los botones
+        //btn_Siguiente.addTarget(self, action: #selector(ImagenAnterior), for: .touchUpInside)
+        //btn_Anterior.addTarget(self, action: #selector(ImagenSiguiente), for: .touchUpInside)
      
         SegmenControl.selectedSegmentIndex = 0
         TabBarSelect(SegmenControl.selectedSegmentIndex)
@@ -74,12 +84,14 @@ class ArticuloViewController: UIViewController, UITableViewDataSource, UISearchB
         ResenasView.isHidden = true
         GaleriaView.isHidden = true
         ImgCollectionView.isHidden = true
+        NavigacionView.isHidden = true
             
         switch index {
             case 0: CaracteristicasView.isHidden = false
             case 1: ResenasView.isHidden = false
             case 2: GaleriaView.isHidden = false
             default: ImgCollectionView.isHidden = false
+            NavigacionView.isHidden = false
         }
     }
 
@@ -118,6 +130,32 @@ class ArticuloViewController: UIViewController, UITableViewDataSource, UISearchB
         let galeriaH = galeriaList[indexPath.item]
         cell.render(imagen: galeriaH)
         return cell
+    }
+    
+// Moverse por las imagenes en el CollectionView  ---------------------------------
+    
+    @IBAction func ImagenAnterior() {
+        let currentIndexPath = ImgCollectionView.indexPathsForVisibleItems.first
+        let prevItem = (currentIndexPath?.item ?? 0) - 1
+        if prevItem >= 0 {
+            let indexPath = IndexPath(item: prevItem, section: 0)
+            ImgCollectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
+        } else {
+            let indexPath = IndexPath(item: galeriaList.count - 1, section: 0)
+            ImgCollectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
+        }
+    }
+    
+    @IBAction func ImagenSiguiente() {
+        let currentIndexPath = ImgCollectionView.indexPathsForVisibleItems.first
+        let nextItem = (currentIndexPath?.item ?? 0) + 1
+        if nextItem < galeriaList.count {
+            let indexPath = IndexPath(item: nextItem, section: 0)
+            ImgCollectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
+        } else {
+            let indexPath = IndexPath(item: 0, section: 0)
+            ImgCollectionView.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
+        }
     }
     
 // SegmenControl cambio de selcción ---------------------------------------------
